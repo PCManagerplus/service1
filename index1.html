@@ -13,15 +13,21 @@
 
         // ページ読み込み時に実行する処理
         window.onload = function() {
-            // godlogパラメータが存在しない場合はメッセージを表示する
-            if (godlogParam === null) {
-                document.getElementById('message').style.display = 'block';
+            if (godlogParam !== null) {
+                document.getElementById('message').style.display = 'none';
+            } else {
+                // godlogパラメータがない場合はモーダルを表示する
+                document.addEventListener('DOMContentLoaded', function() {
+                    var elems = document.querySelectorAll('.modal');
+                    var instances = M.Modal.init(elems, {dismissible: false});
+                    instances[0].open();
+                });
             }
         };
 
         // ログインボタンがクリックされたときの処理
         function redirectToLogin() {
-            window.location.href = '/log/login.html';
+            window.location.href = '/service1/log/login.html';
         }
     </script>
 </head>
@@ -55,6 +61,17 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- モーダル構造 -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>注意</h4>
+        <p>ログインしなおしてください。</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn waves-effect waves-light" onclick="redirectToLogin()">ログイン</button>
     </div>
 </div>
 
