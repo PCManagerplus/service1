@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Index 1</title>
+<script>
+// URLパラメータの取得
+const urlParams = new URLSearchParams(window.location.search);
+const godlogParam = urlParams.get('godlog');
+
+// ページ読み込み時に実行する処理
+window.onload = function() {
+    // godlogパラメータが存在する場合は非表示にする
+    if (godlogParam !== null) {
+        document.getElementById('message').style.display = 'none';
+    }
+};
+
+// ログインボタンがクリックされたときの処理
+function redirectToLogin() {
+    window.location.href = '/log/login.html';
+}
+</script>
+</head>
+<body>
+<!-- ログインメッセージ -->
+<p id="message">ログインしなおしてください。</p>
+
+<!-- ログインボタン -->
+<button onclick="redirectToLogin()">ログイン</button>
+</body>
+</html>
