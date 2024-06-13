@@ -80,7 +80,7 @@
                     loginResult.classList.remove('green-text');
                     loginResult.textContent = '';
                     alert('ログイン成功');
-                    window.location.href = '/index1.html?godlog';
+                    window.location.href = '/service1/index1.html?godlog';
                 } else {
                     // ログイン失敗時の処理
                     attemptCount++;
@@ -88,7 +88,7 @@
                     errorSound.play();
                     if (attemptCount >= 5) {
                         alert('5回間違えたのでホームに戻ります');
-                        window.location.href = '/index.html'; // ホームに戻る
+                        window.location.href = '/service1/index.html'; // ホームに戻る
                     } else {
                         alert(`残り${5 - attemptCount}回 (5回間違えましたら、ホームに戻ります。)`);
                     }
