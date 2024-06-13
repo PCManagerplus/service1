@@ -43,6 +43,18 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>ログインエラー</h4>
+            <p id="modal-text"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+        </div>
+    </div>
+
     <!-- Error sound -->
     <audio id="error-sound" src="https://pcmanagerplus.github.io/media.web/Windows11%20sounds%20all/Windows%20Hardware%20Fail.wav" preload="auto"></audio>
     <!-- Materialize JS CDN -->
@@ -52,6 +64,9 @@
             const loginForm = document.getElementById('login-form');
             const loginResult = document.getElementById('login-result');
             const errorSound = document.getElementById('error-sound');
+            const modalElem = document.getElementById('modal1');
+            const modalText = document.getElementById('modal-text');
+            const modalInstance = M.Modal.init(modalElem);
 
             // ログインIDとパスワードのリスト
             const validLogins = {
@@ -79,18 +94,25 @@
                     loginResult.classList.remove('red-text');
                     loginResult.classList.remove('green-text');
                     loginResult.textContent = '';
-                    alert('ログイン成功');
-                    window.location.href = '/service1/index1.html?godlog';
+                    modalText.textContent = 'ログイン成功';
+                    modalInstance.open();
+                    setTimeout(() => {
+                        window.location.href = '/service1/index1.html?godlog';
+                    }, 2000); // 2秒後にリダイレクト
                 } else {
                     // ログイン失敗時の処理
                     attemptCount++;
                     loginResult.classList.remove('hidden');
                     errorSound.play();
                     if (attemptCount >= 5) {
-                        alert('5回間違えたのでホームに戻ります');
-                        window.location.href = '/service1/index.html'; // ホームに戻る
+                        modalText.textContent = '5回間違えたのでホームに戻ります';
+                        modalInstance.open();
+                        setTimeout(() => {
+                            window.location.href = '/service1/index.html'; // ホームに戻る
+                        }, 2000); // 2秒後にリダイレクト
                     } else {
-                        alert(`残り${5 - attemptCount}回 (5回間違えましたら、ホームに戻ります。)`);
+                        modalText.textContent = `残り${5 - attemptCount}回 (5回間違えましたら、ホームに戻ります。)`;
+                        modalInstance.open();
                     }
                 }
             });
