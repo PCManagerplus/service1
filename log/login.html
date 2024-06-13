@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログインフォーム</title>
+    <!-- Materialize CSS CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- Materialize Icons CDN -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m6 offset-m3">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">ログイン</span>
+                        <form id="login-form">
+                            <div class="input-field">
+                                <input id="login_id" type="text" class="validate" required>
+                                <label for="login_id">ログインID</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="password" type="password" class="validate" required>
+                                <label for="password">パスワード</label>
+                            </div>
+                            <div class="card-action">
+                                <button type="submit" class="btn waves-effect waves-light">ログイン</button>
+                            </div>
+                        </form>
+                        <p id="login-result" class="red-text hidden">ログインIDまたはパスワードが正しくありません</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Error sound -->
+    <audio id="error-sound" src="error-sound.mp3" preload="auto"></audio>
+    <!-- Materialize JS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('login-form');
+            const loginResult = document.getElementById('login-result');
+            const errorSound = document.getElementById('error-sound');
+
+            // ログインIDとパスワードのリスト
+            const validLogins = {
+                'test1': 'test1',
+                'test2': 'test2',
+                'test3': 'test3',
+                'test4': 'test4',
+                'test5': 'test5',
+                'test6': 'test6',
+                'test7': 'test7',
+                'test8': 'test8',
+                'test9': 'test9',
+                'test10': 'test10'
+            };
+
+            let attemptCount = 0;
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const loginId = document.getElementById('login_id').value;
+                const password = document.getElementById('password').value;
+
+                if (validLogins[loginId] && validLogins[loginId] === password) {
+                    // ログイン成功時の処理
+                    loginResult.classList.add('hidden');
+                    loginResult.classList.remove('red-text');
+                    loginResult.classList.remove('green-text');
+                    loginResult.textContent = '';
+                    alert('ログイン成功');
+                    window.location.href = '/index1.html?godlog';
+                } else {
+                    // ログイン失敗時の処理
+                    attemptCount++;
+                    loginResult.classList.remove('hidden');
+                    errorSound.play();
+                    if (attemptCount >= 5) {
+                        alert('5回間違えたのでホームに戻ります');
+                        window.location.href = '/index.html'; // ホームに戻る
+                    } else {
+                        alert(`残り${5 - attemptCount}回 (5回間違えましたら、ホームに戻ります。)`);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
