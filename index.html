@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SouBuild Centered Text with Swipe</title>
+    <title>SouBuild Centered Text with Scroll</title>
     <!-- Materialize CSSのCDNリンク -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <style>
@@ -52,36 +52,27 @@
 
     <!-- Materialize CSSのJavaScriptのCDNリンク -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <!-- タッチイベントを検出するスクリプト -->
+    <!-- スクロールイベントを検出するスクリプト -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            let touchstartY = 0;
-            let touchendY = 0;
+            let lastScrollTop = 0;
+            const loginContainer = document.getElementById('loginContainer');
 
-            function handleGesture() {
-                const loginContainer = document.getElementById('loginContainer');
-                if (touchendY < touchstartY) {
-                    // 上にスワイプされたときの処理
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > lastScrollTop) {
+                    // 下にスクロールしたときの処理
                     loginContainer.classList.add('show');
-                }
-                if (touchendY > touchstartY) {
-                    // 下にスワイプされたときの処理
+                } else {
+                    // 上にスクロールしたときの処理
                     loginContainer.classList.remove('show');
                 }
-            }
-
-            document.addEventListener('touchstart', function(event) {
-                touchstartY = event.changedTouches[0].screenY;
-            }, false);
-
-            document.addEventListener('touchend', function(event) {
-                touchendY = event.changedTouches[0].screenY;
-                handleGesture();
-            }, false);
+                lastScrollTop = scrollTop;
+            });
 
             document.getElementById('loginButton').addEventListener('click', function() {
                 // ログインボタンが押されたときの処理
-                window.location.href = '/service1/log/login.html';
+                window.location.href = '/log/login.html';
             });
         });
     </script>
