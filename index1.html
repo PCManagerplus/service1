@@ -27,6 +27,13 @@
             padding: 20px;
             border-radius: 10px;
         }
+        /* ログアウトボタン用のスタイル */
+        .logout-button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     </style>
     <script>
         // URLパラメータの取得
@@ -43,7 +50,12 @@
 
         // ログインボタンがクリックされたときの処理
         function redirectToLogin() {
-            window.location.href = '/log/login.html';
+            window.location.href = '/service1/log/login.html';
+        }
+
+        // ログアウトボタンがクリックされたときの処理
+        function redirectToService() {
+            window.location.href = '/service1/index.html';
         }
     </script>
 </head>
@@ -80,6 +92,11 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- ログアウトボタン -->
+<div class="logout-button">
+    <button class="btn waves-effect waves-light red" onclick="redirectToService()">ログアウト</button>
 </div>
 
 <!-- Materialize JS CDN -->
