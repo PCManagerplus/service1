@@ -6,6 +6,28 @@
     <title>Index 1</title>
     <!-- Materialize CSS CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <style>
+        /* ログインメッセージ用のスタイル */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+        .overlay-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
     <script>
         // URLパラメータの取得
         const urlParams = new URLSearchParams(window.location.search);
@@ -13,31 +35,27 @@
 
         // ページ読み込み時に実行する処理
         window.onload = function() {
-            if (godlogParam !== null) {
-                document.getElementById('message').style.display = 'none';
-            } else {
-                // godlogパラメータがない場合はモーダルを表示する
-                document.addEventListener('DOMContentLoaded', function() {
-                    var elems = document.querySelectorAll('.modal');
-                    var instances = M.Modal.init(elems, {dismissible: false});
-                    instances[0].open();
-                });
+            // godlogパラメータが存在しない場合はメッセージを表示する
+            if (godlogParam === null) {
+                document.getElementById('overlay').style.display = 'block';
             }
         };
 
         // ログインボタンがクリックされたときの処理
         function redirectToLogin() {
-            window.location.href = '/service1/log/login.html';
+            window.location.href = '/log/login.html';
         }
     </script>
 </head>
 <body>
 
-<!-- ログインメッセージ -->
-<p id="message" style="display: none;">ログインしなおしてください。</p>
-
-<!-- ログインボタン -->
-<button class="btn waves-effect waves-light" onclick="redirectToLogin()">ログイン</button>
+<!-- オーバーレイメッセージ -->
+<div id="overlay" class="overlay">
+    <div class="overlay-content">
+        <p>ログインしなおしてください。</p>
+        <button class="btn waves-effect waves-light" onclick="redirectToLogin()">ログイン</button>
+    </div>
+</div>
 
 <!-- リンクボタン -->
 <div class="container">
@@ -61,17 +79,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- モーダル構造 -->
-<div id="modal1" class="modal">
-    <div class="modal-content">
-        <h4>注意</h4>
-        <p>ログインしなおしてください。</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn waves-effect waves-light" onclick="redirectToLogin()">ログイン</button>
     </div>
 </div>
 
